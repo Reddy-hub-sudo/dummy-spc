@@ -3,35 +3,31 @@ pipeline {
         label 'node-1'
     }
     triggers {
-        cron('0 * * * *')
+        cron('H * * * 1-2')
         pollSCM('* * * * *')
     }
     parameters {
-        string(name: 'MAVENGOAL', defaultValue: 'clean package', description: 'enter the mavengoal')
+        string(name: 'MAVENGOAL', defaultValue: 'clean package', description: 'enter the mavengaoal')
+    }
+    options {
+        timeout(time: 5, unit: 'MINUTES')
     }
     stages {
-        stage('scm'){
+        stage('scm') {
             steps{
                 git branch: 'qa', url: 'https://github.com/Reddy-hub-sudo/dummy-spc.git'
             }
         }
-        stage('build'){
+        stage('build') {
             steps{
-                sh script: "mvn ${params.MAVENGOAL"
+                sh script: "mvn ${params.MAVENGOAL}"
             }
         }
-        stage('post build'){
+        stage('post build') {
             steps{
-                archiveArtifacts 'target/*.jar'
                 junit 'target/surefire-reports/*.xml'
+                archiveArtifacts 'target/*.jar'
             }
         }
-    }
-    post {
-        always {
-            mail to: 'learningthoughts.in@gmail.com', 
-                subject: "Status of pipeline ${currentBuild.fullDisplayName}",
-                body: "${env.BUILD_URL} has result ${currentBuild.result}"
-        }
-    }
+    }     
 }
