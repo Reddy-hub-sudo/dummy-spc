@@ -1,30 +1,22 @@
-pipeline {
-    agent {
-        label 'master-1'
+pipeline{
+    agent{
+        label "master-1"
     }
     triggers {
-        cron('H * * * 1-5')
+        cron('H * * * 1-2')
         pollSCM('* * * * *')
     }
-    parameters {
-        string(name: 'MAVENGOAL', defaultValue: 'clean package', description: 'enter the mavengoal')
-    }
-    stages {
-        stage('scm'){
+    stages{
+        stage("scm"){
             steps{
-                git "url"
+                git branch: "developer", url: "https://github.com/Reddy-hub-sudo/dummy-spc.git"
             }
         }
-        stage('Build'){
+        stage("mvn"){
             steps{
-                sh script: "mvn ${params.MAVENGOAL"
+                sh "mvn clean package"
             }
         }
-        stage('post build'){
-           steps{
-                archiveArtifacts 'target/*.jar'
-                junit 'target/surefire-reports/*.xml'
-            }
-        }
+
     }
 }
