@@ -1,9 +1,9 @@
 pipeline {
     agent {
-        label 'node-1'
+        label 'node-2'
     }
     triggers {
-        cron('H * * * 1-5')
+        cron('0 * * * *')
         pollSCM('* * * * *')
     }
     parameters {
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('scm'){
             steps{
-                git "url"
+                git branch: 'tester', url: 'https://github.com/Reddy-hub-sudo/dummy-spc.git'
             }
         }
         stage('Build'){
@@ -25,6 +25,11 @@ pipeline {
                 archiveArtifacts ' '
                 junit ' '
             }
+        }
+    }
+    post {
+        always {
+            sendNotifications currentBuild.result
         }
     }
 }
