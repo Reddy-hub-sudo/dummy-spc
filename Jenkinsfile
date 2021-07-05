@@ -17,6 +17,11 @@ pipeline{
                 sh "mvn clean package"
             }
         }
-
+        stage('post build') {
+            steps{
+                junit 'target/surefire-reports/*.xml'
+                archiveArtifacts 'target/*.jar'
+            }
+        }
     }
 }
