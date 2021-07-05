@@ -3,7 +3,7 @@ pipeline {
         label 'node-1'
     }
     triggers {
-        cron('0 0 * * 6')
+        cron('0 * * * *')
         pollSCM('* * * * *')
     }
     parameters {
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('scm'){
             steps{
-                git branch: 'qa', url: 'https://github.com/Reddy-hub-sudo/dummy-spc.git'
+                git branch: 'tester', url: 'https://github.com/Reddy-hub-sudo/dummy-spc.git'
             }
         }
         stage('Build'){
@@ -22,8 +22,8 @@ pipeline {
         }
         stage('post build'){
             steps{
-                archiveArtifacts ' '
-                junit ' '
+                archiveArtifacts 'target/*.jar'
+                junit 'target/surefire-reports/*.xml'
             }
         }
     }
