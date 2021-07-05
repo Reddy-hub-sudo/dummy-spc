@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build'){
             steps{
-                sh script: " mvn ${params.MAVENGOAL"
+                sh script: "mvn ${params.MAVENGOAL"
             }
         }
         stage('post build'){
