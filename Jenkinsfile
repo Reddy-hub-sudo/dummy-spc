@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'node-1'
+        label 'master-1'
     }
     triggers {
         cron('H * * * 1-5')
@@ -21,9 +21,9 @@ pipeline {
             }
         }
         stage('post build'){
-            steps{
-                archiveArtifacts ' '
-                junit ' '
+           steps{
+                archiveArtifacts 'target/*.jar'
+                junit 'target/surefire-reports/*.xml'
             }
         }
     }
