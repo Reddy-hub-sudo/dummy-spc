@@ -20,7 +20,7 @@ pipeline {
         }
         stage('build') {
             steps {
-                withSonarQubeEnv('SONAR-7.1') {
+                withSonarQubeEnv('sonar') {
                     sh script: 'mvn clean package sonar:sonar'
                 }
 
