@@ -12,10 +12,10 @@ pipeline {
     stages {
         stage('scm'){
             steps{
-                git branch: 'tester', url: 'https://github.com/Reddy-hub-sudo/dummy-spc.git'
+                git branch: 'qa', url: 'https://github.com/Reddy-hub-sudo/dummy-spc.git'
             }
         }
-        stage('Build'){
+        stage('build'){
             steps{
                 sh script: "mvn ${params.MAVENGOAL"
             }
