@@ -10,7 +10,7 @@ pipeline {
         string(name: 'MAVENGOAL', defaultValue: 'clean package', description: 'enter the mavengaoal')
     }
     options {
-        timeout(time: 5, unit: 'MINUTES')
+        timeout(time: 15, unit: 'MINUTES')
     }
     stages {
         stage('scm') {
